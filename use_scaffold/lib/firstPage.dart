@@ -14,9 +14,7 @@ class _FirstState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text(widget.title)),
-      ),
+      appBar: _buildAppBar(),
       drawer: const Drawer(),
       body: _buildBody(),
       floatingActionButton: FloatingActionButton(
@@ -31,6 +29,15 @@ class _FirstState extends State<FirstPage> {
         BottomNavigationBarItem(
             icon: Icon(Icons.live_help_rounded), label: 'Unuttum')
       ]),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      title: Center(child: Text(widget.title)),
+      centerTitle: true,
+      leading: const Icon(Icons.turn_left_sharp),
+      actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.menu))],
     );
   }
 
