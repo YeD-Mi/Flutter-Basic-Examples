@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:use_pageview/first_page.dart';
 import 'package:use_pageview/second_page.dart';
-import 'package:use_pageview/src/colors.dart';
 import 'package:use_pageview/third_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -43,30 +42,30 @@ class _FloatingButtons extends StatelessWidget {
       children: [
         FloatingActionButton(
           shape: RoundedRectangleBorder(
-              side: const BorderSide(width: 3, color: brownColor),
+              side: const BorderSide(width: 3, color: Colors.amber),
               borderRadius: BorderRadius.circular(100)),
-          backgroundColor: whiteColor,
+          backgroundColor: Colors.white,
           onPressed: () {
             _pageController.previousPage(
                 duration: _durationSeconds, curve: _durationCurve);
           },
           child: const Icon(
             Icons.arrow_left_sharp,
-            color: blackColor,
+            color: Colors.black,
           ),
         ),
         FloatingActionButton(
           shape: RoundedRectangleBorder(
-              side: const BorderSide(width: 3, color: brownColor),
+              side: const BorderSide(width: 3, color: Colors.amber),
               borderRadius: BorderRadius.circular(100)),
-          backgroundColor: whiteColor,
+          backgroundColor: Colors.white,
           onPressed: () {
             _pageController.nextPage(
                 duration: _durationSeconds, curve: _durationCurve);
           },
           child: const Icon(
             Icons.arrow_right_sharp,
-            color: blackColor,
+            color: Colors.black,
           ),
         ),
       ],
