@@ -24,33 +24,48 @@ class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-              side: const BorderSide(width: 3, color: brownColor),
-              borderRadius: BorderRadius.circular(100)),
-          backgroundColor: whiteColor,
-          onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const ShoppingCart()));
-          },
-          child: const Icon(
-            Icons.shopping_cart_rounded,
-            color: blackColor,
-          ),
-        ),
+        floatingActionButton: const _FloatingButtons(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.home), label: orderBottom),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.person_pin), label: profilBottom),
-          ],
-          currentIndex: _selectecIndex,
-          selectedItemColor: primaryColor,
-          onTap: _onItemTapped,
-        ),
+        bottomNavigationBar: _myBottomBar(),
         body: _selectecIndex == 0 ? const _BuildPage() : const ProfilPage());
+  }
+
+  BottomNavigationBar _myBottomBar() {
+    return BottomNavigationBar(
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.home), label: orderBottom),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.person_pin), label: profilBottom),
+      ],
+      currentIndex: _selectecIndex,
+      selectedItemColor: primaryColor,
+      onTap: _onItemTapped,
+    );
+  }
+}
+
+class _FloatingButtons extends StatelessWidget {
+  const _FloatingButtons({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      shape: RoundedRectangleBorder(
+          side: const BorderSide(width: 3, color: brownColor),
+          borderRadius: BorderRadius.circular(100)),
+      backgroundColor: whiteColor,
+      onPressed: () {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const ShoppingCart()));
+      },
+      child: const Icon(
+        Icons.shopping_cart_rounded,
+        color: blackColor,
+      ),
+    );
   }
 }
 
