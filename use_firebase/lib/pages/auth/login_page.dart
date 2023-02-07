@@ -8,10 +8,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late String email, password;
+  String topImages = 'assets/images/topimages.png';
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    String topImages = 'assets/images/topimages.png';
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Padding(
@@ -33,79 +36,103 @@ class _LoginPageState extends State<LoginPage> {
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Login Page',
-                          style: TextStyle(
-                              color: Colors.amber.shade100,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: size.height * 0.05),
-                        Text(
-                          'Welcome to a fiery firebase app.',
-                          style: TextStyle(
-                              color: Colors.amber.shade100, fontSize: 16),
-                        ),
-                        SizedBox(height: size.height * 0.05),
-                        TextField(
-                            style: const TextStyle(color: Colors.white),
-                            keyboardType: TextInputType.emailAddress,
-                            cursorColor: Colors.white,
-                            decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.mail,
-                                  color: Colors.amber.shade100,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color: Colors.amber.shade100)),
-                                labelText: 'User Name',
-                                labelStyle: TextStyle(
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Login Page',
+                            style: TextStyle(
+                                color: Colors.amber.shade100,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: size.height * 0.05),
+                          Text(
+                            'Welcome to a fiery firebase app.',
+                            style: TextStyle(
+                                color: Colors.amber.shade100, fontSize: 16),
+                          ),
+                          SizedBox(height: size.height * 0.05),
+                          TextFormField(
+                              style: const TextStyle(color: Colors.white),
+                              keyboardType: TextInputType.emailAddress,
+                              cursorColor: Colors.white,
+                              validator: (value) {
+                                if (value!.isEmpty)
+                                  return "Bilgileri doldur";
+                                else {}
+                              },
+                              onSaved: ((value) {
+                                email = value!;
+                              }),
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.mail,
                                     color: Colors.amber.shade100,
-                                    fontSize: 18))),
-                        TextField(
-                            style: const TextStyle(color: Colors.white),
-                            keyboardType: TextInputType.emailAddress,
-                            cursorColor: Colors.white,
-                            decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.lock_open_rounded,
-                                  color: Colors.amber.shade100,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color: Colors.amber.shade100)),
-                                labelText: 'Password',
-                                labelStyle: TextStyle(
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 2,
+                                          color: Colors.amber.shade100)),
+                                  labelText: 'User Name',
+                                  labelStyle: TextStyle(
+                                      color: Colors.amber.shade100,
+                                      fontSize: 18))),
+                          TextFormField(
+                              style: const TextStyle(color: Colors.white),
+                              keyboardType: TextInputType.emailAddress,
+                              cursorColor: Colors.white,
+                              validator: (value) {
+                                if (value!.isEmpty)
+                                  return "Bilgileri doldur";
+                                else {}
+                              },
+                              onSaved: ((value) {
+                                password = value!;
+                              }),
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.lock_open_rounded,
                                     color: Colors.amber.shade100,
-                                    fontSize: 18))),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            ElevatedButton(
-                                onPressed: () {}, child: const Text('Login')),
-                            ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, "/signUp");
-                                },
-                                child: const Text('Register'))
-                          ],
-                        ),
-                        TextButton(
-                            onPressed: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: const [
-                                Icon(Icons.memory),
-                                Text('Forgot My Password'),
-                              ],
-                            ))
-                      ],
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 2,
+                                          color: Colors.amber.shade100)),
+                                  labelText: 'Password',
+                                  labelStyle: TextStyle(
+                                      color: Colors.amber.shade100,
+                                      fontSize: 18))),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {
+                                    if (formKey.currentState!.validate()) {
+                                      formKey.currentState!.save();
+                                    } else {}
+                                  },
+                                  child: const Text('Login')),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, "/signUp");
+                                  },
+                                  child: const Text('Register'))
+                            ],
+                          ),
+                          TextButton(
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: const [
+                                  Icon(Icons.memory),
+                                  Text('Forgot My Password'),
+                                ],
+                              ))
+                        ],
+                      ),
                     ),
                   ),
                 ),

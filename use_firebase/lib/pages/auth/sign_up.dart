@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -8,6 +9,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final formKey = GlobalKey<FormState>();
+  late String email, password1, password2;
+  final firebaseAuth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -33,88 +37,140 @@ class _SignUpState extends State<SignUp> {
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Register Page',
-                          style: TextStyle(
-                              color: Colors.amber.shade100,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: size.height * 0.05),
-                        Text(
-                          'I was raw, cooked, burned.',
-                          style: TextStyle(
-                              color: Colors.amber.shade100, fontSize: 16),
-                        ),
-                        SizedBox(height: size.height * 0.05),
-                        TextField(
-                            style: const TextStyle(color: Colors.white),
-                            keyboardType: TextInputType.emailAddress,
-                            cursorColor: Colors.white,
-                            decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.mail,
-                                  color: Colors.amber.shade100,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color: Colors.amber.shade100)),
-                                labelText: 'User Name',
-                                labelStyle: TextStyle(
-                                    color: Colors.amber.shade100,
-                                    fontSize: 18))),
-                        TextField(
-                            style: const TextStyle(color: Colors.white),
-                            keyboardType: TextInputType.emailAddress,
-                            cursorColor: Colors.white,
-                            decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.lock_open_rounded,
-                                  color: Colors.amber.shade100,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color: Colors.amber.shade100)),
-                                labelText: 'Password',
-                                labelStyle: TextStyle(
-                                    color: Colors.amber.shade100,
-                                    fontSize: 18))),
-                        TextField(
-                            style: const TextStyle(color: Colors.white),
-                            keyboardType: TextInputType.emailAddress,
-                            cursorColor: Colors.white,
-                            decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.lock_open_rounded,
-                                  color: Colors.amber.shade100,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color: Colors.amber.shade100)),
-                                labelText: 'Again Password',
-                                labelStyle: TextStyle(
-                                    color: Colors.amber.shade100,
-                                    fontSize: 18))),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    child: Expanded(
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, "/loginPage");
+                            Text(
+                              'Register Page',
+                              style: TextStyle(
+                                  color: Colors.amber.shade100,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: size.height * 0.05),
+                            Text(
+                              'I was raw, cooked, burned.',
+                              style: TextStyle(
+                                  color: Colors.amber.shade100, fontSize: 16),
+                            ),
+                            SizedBox(height: size.height * 0.05),
+                            TextFormField(
+                                style: const TextStyle(color: Colors.white),
+                                keyboardType: TextInputType.emailAddress,
+                                cursorColor: Colors.white,
+                                validator: (value) {
+                                  if (value!.isEmpty)
+                                    return "Bilgileri doldur";
+                                  else {}
                                 },
-                                child: const Text('Back')),
-                            ElevatedButton(
-                                onPressed: () {}, child: const Text('Register'))
+                                onSaved: ((value) {
+                                  email = value!;
+                                }),
+                                decoration: InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.mail,
+                                      color: Colors.amber.shade100,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 2,
+                                            color: Colors.amber.shade100)),
+                                    labelText: 'User Name',
+                                    labelStyle: TextStyle(
+                                        color: Colors.amber.shade100,
+                                        fontSize: 18))),
+                            TextFormField(
+                                style: const TextStyle(color: Colors.white),
+                                keyboardType: TextInputType.emailAddress,
+                                cursorColor: Colors.white,
+                                validator: (value) {
+                                  if (value!.isEmpty)
+                                    return "Bilgileri doldur";
+                                  else {}
+                                },
+                                onSaved: ((value) {
+                                  password1 = value!;
+                                }),
+                                decoration: InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.lock_open_rounded,
+                                      color: Colors.amber.shade100,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 2,
+                                            color: Colors.amber.shade100)),
+                                    labelText: 'Password',
+                                    labelStyle: TextStyle(
+                                        color: Colors.amber.shade100,
+                                        fontSize: 18))),
+                            TextFormField(
+                                style: const TextStyle(color: Colors.white),
+                                keyboardType: TextInputType.emailAddress,
+                                cursorColor: Colors.white,
+                                validator: (value) {
+                                  if (value!.isEmpty)
+                                    return "Bilgileri doldur";
+                                  else {}
+                                },
+                                onSaved: ((value) {
+                                  if (value == password1) {
+                                    password2 = value!;
+                                  } else {}
+                                }),
+                                decoration: InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.lock_open_rounded,
+                                      color: Colors.amber.shade100,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 2,
+                                            color: Colors.amber.shade100)),
+                                    labelText: 'Again Password',
+                                    labelStyle: TextStyle(
+                                        color: Colors.amber.shade100,
+                                        fontSize: 18))),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, "/loginPage");
+                                    },
+                                    child: const Text('Back')),
+                                ElevatedButton(
+                                    onPressed: () async {
+                                      if (formKey.currentState!.validate()) {
+                                        formKey.currentState!.save();
+                                        try {
+                                          var userResult = await firebaseAuth
+                                              .createUserWithEmailAndPassword(
+                                                  email: email,
+                                                  password: password2);
+                                          formKey.currentState!.reset();
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      'Registration successful. You can login.')));
+                                          Navigator.pushReplacementNamed(
+                                              context, "/loginPage");
+                                        } catch (e) {
+                                          print((e.toString()));
+                                        }
+                                      } else {}
+                                    },
+                                    child: const Text('Register'))
+                              ],
+                            ),
+                            SizedBox(height: size.height * 0.02),
                           ],
                         ),
-                        SizedBox(height: size.height * 0.02),
-                      ],
+                      ),
                     ),
                   ),
                 ),
